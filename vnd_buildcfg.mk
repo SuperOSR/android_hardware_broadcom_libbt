@@ -1,6 +1,14 @@
 intermediates := $(local-intermediates-dir)
 
+ifeq ($(SW_BOARD_HAVE_BLUETOOTH_NAME), ap6330)
+SRC := $(call my-dir)/include/vnd_softwinner-ap6330.txt
+endif
+ifeq ($(SW_BOARD_HAVE_BLUETOOTH_NAME), ap6210)
+SRC := $(call my-dir)/include/vnd_softwinner-ap6210.txt
+endif
+ifeq (,$(wildcard $(SRC)))
 SRC := $(call my-dir)/include/$(addprefix vnd_, $(addsuffix .txt,$(basename $(TARGET_DEVICE))))
+endif
 ifeq (,$(wildcard $(SRC)))
 # configuration file does not exist. Use default one
 SRC := $(call my-dir)/include/vnd_generic.txt

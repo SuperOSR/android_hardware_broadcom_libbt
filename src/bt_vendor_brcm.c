@@ -139,9 +139,21 @@ static int op(bt_vendor_opcode_t opcode, void *param)
             {
                 int *state = (int *) param;
                 if (*state == BT_VND_PWR_OFF)
+                {
                     upio_set_bluetooth_power(UPIO_BT_POWER_OFF);
+#ifdef HAVE_BLUETOOTH_BCM
+                    BTVNDDBG("set bt module power off.");
+                    usleep(200000);
+#endif
+                }
                 else if (*state == BT_VND_PWR_ON)
+                {
                     upio_set_bluetooth_power(UPIO_BT_POWER_ON);
+#ifdef HAVE_BLUETOOTH_BCM
+                    BTVNDDBG("set bt module power on.");
+                    usleep(500000);
+#endif
+                }
             }
             break;
 

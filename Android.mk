@@ -6,6 +6,12 @@ include $(CLEAR_VARS)
 
 BDROID_DIR := $(TOP_DIR)external/bluetooth/bluedroid
 
+ifeq ($(SW_BOARD_HAVE_BLUETOOTH_NAME), ap6210)
+LOCAL_CFLAGS += -DUSE_AP6210_BT_MODULE
+endif
+
+LOCAL_CFLAGS += -DHAVE_BLUETOOTH_BCM
+
 LOCAL_SRC_FILES := \
         src/bt_vendor_brcm.c \
         src/hardware.c \
@@ -42,6 +48,12 @@ ifeq ($(TARGET_PRODUCT), full_crespo4g)
 endif
 ifeq ($(TARGET_PRODUCT), full_wingray)
     include $(LOCAL_PATH)/conf/moto/wingray/Android.mk
+endif
+ifeq ($(SW_BOARD_HAVE_BLUETOOTH_NAME), ap6330)
+    include $(LOCAL_PATH)/conf/softwinner/ap6330/Android.mk
+endif
+ifeq ($(SW_BOARD_HAVE_BLUETOOTH_NAME), ap6210)
+    include $(LOCAL_PATH)/conf/softwinner/ap6210/Android.mk
 endif
 
 endif # BOARD_HAVE_BLUETOOTH_BCM
